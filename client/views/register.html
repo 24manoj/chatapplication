@@ -1,0 +1,46 @@
+<html>
+
+<head>
+    <title> Registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+
+<body ng-controller="registrationCntr">
+    <div class="container">
+        <div class="row">
+
+            <div class="register-form-col-md-4 offset-md-4">
+                <h3 class="title"> Enter your credientials</h3>
+                <form>
+                    <div class="from-group">
+                        <input type="text" name="firstName" class="form-contol" ng-model="firstName"
+                            placeholder=" first name::Jhon" style="width:300px" required>
+                    </div>
+                    <div class="from-group">
+                        <input type="text" class="form-contol" name="LastName" ng-model="LastName"
+                            placeholder="Lastname::Smith" style="width:300px" required>
+                    </div>
+                    <div class="from-group">
+                        <input type="email" class="form-contol" name="Email" ng-model="Email"
+                            placeholder="abc@gmail.com" style="width:300px" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="from-contol" name="password" ng-model="Password"
+                            placeholder="password ****" style="width:300px" required>
+                    </div>
+                    <p><span> {{result}}</span></p>
+
+                    <div> <button ng-click="register()" class="btn btn-primary btn-block"> Register</button>
+
+                    </div>
+                    <div> <button class="btn btn-primary btn-block" ng-click="pageChange()">
+                            SignIn</button> </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

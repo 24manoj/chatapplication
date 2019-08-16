@@ -1,0 +1,65 @@
+/* aligins attribute to center */
+h1 {
+    text-align: center;
+}
+
+/* specifies the max width for form,margin,padding */
+form {
+    max-width: 360px;
+    margin: 10px;
+    padding: 3px;
+}
+
+/* class css,specifies border */
+.border {
+    border: thin black solid;
+    margin: 20px;
+    padding: 20px;
+}
+
+/* specifies margin and padding*/
+div {
+    margin: 5pt;
+    padding: 1pt;
+}
+
+#navi-color {
+    background-color: rgb(0, 183, 255);
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+#users-color {
+    background-color: cyan;
+    width: 800px;
+    height: 500px;
+    margin: 2px;
+    padding: 2px;
+}
+
+
+#display-flx {
+    display: flex;
+}
+
+.typemsg {
+    position: -ms-page;
+    margin: 0%;
+    padding: 0%
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(0, 183, 255);
+    color: white;
+    text-align: left;
+}
+
+p {
+
+    margin: 0 !important;
+}
