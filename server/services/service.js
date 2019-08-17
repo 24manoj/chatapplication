@@ -116,3 +116,19 @@ exports.getMsg = (req, callback) => {
         console.log(e);
     }
 }
+
+exports.createGroup = (req, callback) => {
+    try {
+
+        userModel.createGroup(req, (err, data) => {
+            if (err) {
+                callback(err);
+            }
+            else {
+                callback(null, data);
+            }
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}

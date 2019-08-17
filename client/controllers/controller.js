@@ -88,29 +88,4 @@ app.controller("resetPasswordCtrl", function ($scope, servicesLogin, $location) 
 });
 
 
-// app.controller("uerDashboardctrl", function ($scope, servicesLogin, $location) {
-//     console.log("in dash board");
-//     //checks for the token exist,if exist split the toekn from url
-//     // if ($location.url().indexOf('token') !== -1) {
-//     //     $scope.token = $location.url().split('=')[1];
-//     //     console.log("Token in controler", $scope.token)
-//     // }
-//     // /**
-//     //    * @desc resetPassword takes  no parameter gets the data from front end pass the data to service
-//     //    * @param resetPasswordCtrl,function as a parameter
-//     //    * @return bool - success or failure
-//     //    */
-//     // $scope.resetPassword = () => {
-//     //     if ($scope.Password == null || $scope.confirmPassword == null) {
-//     //         $scope.result = "Passwords Cant be null";
-//     //     }
-//     //     else {
-//     //         var data = {
-//     //             "Password": $scope.Password,
-//     //             "confirmPassword": $scope.confirmPassword
-//     //         }
-//     //         servicesLogin.resetPassword(data, $scope);
-//     //     }
-//     // }
-// });
 

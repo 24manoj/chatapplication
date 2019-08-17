@@ -29,16 +29,25 @@ app.config(function ($routeProvider) {
             controller: "listUsers"
 
         })
+        .when('/groupChat', {
+            templateUrl: "./views/groupChat.html",
+            controller: "listUsers"
+
+        })
+        .when('/redirect', {
+            templateUrl: "./views/userDashbord.html",
+            controller: "listUsers"
+
+        })
         .otherwise({
             redirectTo: "/"
         });
 });
+
 
 app.service('SocketService', ['socketFactory', function SocketService(socketFactory) {
     return socketFactory({
         ioSocket: io.connect('http://localhost:3000')
     });
 }]);
-
-//  
 

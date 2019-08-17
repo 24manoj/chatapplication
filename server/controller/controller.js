@@ -198,3 +198,19 @@ exports.getMsg = (req, res) => {
         console.log(e);
     }
 }
+
+
+exports.createGroup = (req, res) => {
+    try {
+        userService.createGroup(req, (err, data) => {
+            if (err) {
+                callback(err);
+            }
+            else {
+                callback(null, data);
+            }
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}

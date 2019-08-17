@@ -1,0 +1,51 @@
+<html ng-controller="myApp">
+
+<head>
+    <title> chatRoom</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+
+<body ng-controler="listUsers">
+    <div class="vw-100 vh-100">
+        <div class="row" id="navi-color">
+            <div role="navigation">
+                <h1 class="navbar-brand"><label class="display-4">@WeChat</label></h1>
+            </div>
+            <div role="navigation" style="text-align:right" class=" w-100 p-3">
+                <label class="display-5">
+                    <strong>Welcome!!!{{username}}</strong>
+                </label></h1>
+                <button class="btn btn-primary" ng-click="logout()">
+                    LogOut:)</lable>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <input type="text" name="msg" ng-model="groupName" placeholder=" GroupName here....."
+                    style="width:360px;height:45px; " required>
+                <span>{{error}}</span>
+                <div ng-repeat="value in data">
+                    <button class="btn btn-primary btn-block" ng-model=value ng-click="personAdd(value)"
+                        ng-if="value.Email!=userEmail ">
+                        {{value.firstName }}</button> </div>
+            </div>
+            <div class="col-sm-4" id="navi-color">
+
+                <div ng-repeat="mem in members" class="chat">
+                    <p class="chatMsg" style="text-align:left;color:black">
+                        <strong> {{mem}}</strong></p>
+
+                </div>
+            </div>
+        </div>
+        <div class="typemsg">
+
+            <button class=" btn btn-primary" ng-click="redirect()"> Create</button>
+
+            </from>
+
+        </div>
+    </div>

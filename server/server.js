@@ -65,16 +65,19 @@ try {
         console.log("socket Connected");
         socket.on('message', (data) => {
             console.log("Emit catched")
-            controller.chat(data, (err, data) => {
+            controller.chat(data, (err, res) => {
                 if (err) {
                     console.log("un sucessfull insertion");
                 }
                 else {
-                    console.log("in server server.js==>", data);
-                    socket.emit('updateList', data);
+                    console.log("in server server.js==>", res);
+                    io.sockets.emit('updateList', res);
                 }
             })
         });
+    });
+    io.on('disconnect', function () {
+        console.log("socket disconnected!! ");
     });
 } catch (e) {
     console.log(e);

@@ -23,6 +23,28 @@ let chat = new mangoose.Schema({
         timestamps: true
 
     });
+let group = new mangoose.Schema({
+    "groupName": {
+        type: String,
+        required: true,
+        unique: true
+    },
+    "senderEmail": {
+        type: String,
+        required: true
+    },
+    "membersEmail": [{
+        type: String,
+        required: true
+    }],
+    "chatlog": {
+        type: String,
+        required: true
+    }
+}, {
+        timestamps: true
+
+    })
 let registration = new mangoose.Schema({
     "firstName": {
         type: String,
@@ -34,7 +56,8 @@ let registration = new mangoose.Schema({
     },
     "Email": {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     "Password": {
         type: String,
@@ -46,7 +69,7 @@ let registration = new mangoose.Schema({
 var chatMsg = mangoose.model("chat", chat);
 //creating a schema model for  registration
 var userRegistration = mangoose.model("user", registration);
-
+var groupName = mangoose.model("gropName", group);
 
 /**
  * @desc Gets the input from front end and stores the registerd data in deatabase
@@ -194,6 +217,29 @@ exports.resetpassword = (data, callback) => {
     }
 }
 
+
+exports.createGroup = (req, callback) => {
+    try {
+        var groupDeatils = new group({
+            "groupName": req.body.groupName,
+            "senderEmail": req.body.senderEmail,
+            "membersEmail": [req.body.member1, req.body.member2, req.body.member3, req.body.member4],
+            "chatlog": req.body.msg
+        });
+        groupDeatils.save((err, data) => {
+            if (err) {
+                console.log("Group Not created");
+                callback(err);
+            }
+            else {
+                console.log("Group msg inserted");
+                callback(null, data);
+            }
+        })
+    } catch (e) {
+        console.log(e);
+    }
+}
 exports.getUsers = (callback) => {
 
     userRegistration.find((err, data) => {

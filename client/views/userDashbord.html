@@ -1,4 +1,4 @@
-<html>
+<html ng-controller="myApp">
 
 <head>
     <title> chatRoom</title>
@@ -24,28 +24,26 @@
         </div>
         <div class="row">
             <div class="col-sm-4">
+                <buton class="btn btn-primary btn-block">Create group</buton>
                 <div ng-repeat="value in data">
-                    <button class="btn btn-primary btn-block" ng-model=value ng-click="startchat(value)"
-                        ng-if="value.Email!=userEmail " onfoucs="style='background-color:black'">
+                    <button class="btn btn-primary btn-block" ng-model=value ng-click="person(value)"
+                        ng-if="value.Email!=userEmail ">
                         {{value.firstName }}</button> </div>
             </div>
             <div class="col-sm-4" id="navi-color">
 
-                <div ng-repeat="chat in  msgs track by $index" class="chat">
+                <div ng-repeat="chat in msgs" class="chat">
                     <p class="chatMsg" ng-show="chat.from != userEmail" style="text-align:left;color:black">
                         <strong> {{chat.from}}:::{{chat.msg}}</strong></p>
                     <p class="chatMsg" ng-show="chat.from == userEmail" style="text-align:right;color:black">
                         <strong>{{chat.from}}::{{chat.msg}}</strong></p>
                 </div>
-                <div class="typemsg" ng-keyup="$event.keyCode == 13 && storeMsg(msgs)">
+                <div class="typemsg">
                     <input type="text" name="msg" ng-model="msg" placeholder="Type a message...."
-                        style="width:360px;height:45px; ">
-                    <button class=" btn btn-primary" ng-click="storeMsg()"> send</button>
+                        style="width:360px;height:45px; " ng-keyup="$event.keyCode == 13 && storeMsg()">
+                    <button class=" btn btn-primary" ng-click="storeMsg();"> send</button>
                 </div>
             </div>
-            <div class="footer">
-                <div>@2019 BrideLabz <strong>Manoj</strong></div>
 
-            </div>
         </div>
     </div>

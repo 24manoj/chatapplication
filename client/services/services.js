@@ -6,6 +6,24 @@
 */
 
 app.service('servicesLogin', function ($http, $location, SocketService) {
+
+    this.createGrp = (data) => {
+        $http({
+            method: 'POST',
+            url: 'http://localhost:3000/createGrpdata',
+            data: data
+        }).then(function sucessCallback(response) {
+            console.log(" Response===>grp", response);
+            $location.path("/userDashbord.html");
+        },
+            function errrCallback(response) {
+                $scope.result = "Group not created ";
+                console.log("Login UnSucessFull ===>", response);
+            });
+
+    }
+
+
     /**
     * @desc login  gets the data from front end pass the data to service
     * @param data scope  as a parameter
@@ -119,11 +137,15 @@ app.service('servicesLogin', function ($http, $location, SocketService) {
             });
 
     }
+
+
     this.getMsg = ($scope, value) => {
+        console.log("$scope.USermail in get msgs services", $scope.userEmail)
         let data = {
             "from": $scope.userEmail,
-            "to": value.Email
+            "to": value.Email,
         }
+        // SocketService.emit('Message', data);
         localStorage.setItem('msgData', JSON.stringify(data));
         $http({
             method: 'POST',
@@ -131,7 +153,33 @@ app.service('servicesLogin', function ($http, $location, SocketService) {
             data: data
         }).then(function sucessCallback(response) {
             $scope.msgs = response.data;
+            SocketService.emit('updateList', response.data);
+            console.log("fetch sucess ==>", response);
+        });
 
+
+    },
+        function errrCallback(response) {
+            $scope.value = "No users registred.. ";
+            console.log("fetch UnSucessFull ===>", response);
+
+
+        }
+    this.getMsges = ($scope, value) => {
+        console.log("$scope.USermail in get msgs services", $scope.userEmail)
+        let data = {
+            "from": $scope.userEmail,
+            "to": value.Email,
+        }
+        // SocketService.emit('Message', data);
+        localStorage.setItem('msgData', JSON.stringify(data));
+        $http({
+            method: 'POST',
+            url: 'http://localhost:3000/getMsg',
+            data: data
+        }).then(function sucessCallback(response) {
+            $scope.msgs = response.data;
+            SocketService.emit('updateList', response.data);
             console.log("fetch sucess ==>", response);
         });
     },
@@ -160,8 +208,6 @@ app.service('servicesLogin', function ($http, $location, SocketService) {
             data: data
         }).then(function sucessCallback(response) {
             console.log(data);
-
-
         },
             function errrCallback(response) {
                 $scope.value = "No users registred.. ";
