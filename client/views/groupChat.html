@@ -8,7 +8,7 @@
 </head>
 
 <body ng-controler="listUsers">
-    <div class="vw-100 vh-100">
+    <div class="vw-100 vh-100" id="body-color">
         <div class="row" id="navi-color">
             <div role="navigation">
                 <h1 class="navbar-brand"><label class="display-4">@WeChat</label></h1>
@@ -25,7 +25,10 @@
         <div class="row">
             <div class="col-sm-4">
                 <input type="text" name="msg" ng-model="groupName" placeholder=" GroupName here....."
-                    style="width:360px;height:45px; " required>
+                    style="width:380px;height:45px; " required>
+                <button class=" btn btn-primary " ng-click="createGrp()">
+                    Create</button>
+
                 <span>{{error}}</span>
                 <div ng-repeat="value in data">
                     <button class="btn btn-primary btn-block" ng-model=value ng-click="personAdd(value)"
@@ -41,11 +44,5 @@
                 </div>
             </div>
         </div>
-        <div class="typemsg">
 
-            <button class=" btn btn-primary" ng-click="redirect()"> Create</button>
-
-            </from>
-
-        </div>
     </div>

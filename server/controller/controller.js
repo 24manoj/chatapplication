@@ -2,10 +2,12 @@
 const userService = require('../services/service');
 const mail = require('../utility/mailer');
 const jwt = require('../utility/generateToken');
-/*  @desc validates request data,returns if errors are found,process to nextif no error
-    @param req,res  takes request and response as parametrs 
-    @return bool - success or failure *
-    */
+/**
+ * @desc Gets the input from front end filters and performs validation  
+ * @param req request contains all the requested data
+ * @param response sends the data or err  
+ * @return responses with a http response
+ */
 exports.register = (req, res) => {
     //event emiters
     try {
@@ -40,10 +42,12 @@ exports.register = (req, res) => {
         console.log(e);
     }
 }
-/* @desc  filters the request data,validates error
-    @param req,res  takes response and request as parameters 
-    @return response - success or failure 
-    */
+/**
+ * @desc Gets the input from front end filters and performs validation
+ * @param req request contains all the requested data
+ * @param response sends the data or err
+ * @return responses with a http response
+ */
 exports.login = (req, res) => {
     try {
         req.checkBody("Email", "Email is not valid").isEmail();
@@ -69,10 +73,12 @@ exports.login = (req, res) => {
         console.log(e);
     }
 }
-/* @desc  filters the request data,validates error,if everthig is correct send mail
-    @param req,res  takes response and request as parameters 
-    @return response - success or failure 
-    */
+/**
+ * @desc Gets the input from front end filters and performs validation
+ * @param req request contains all the requested data
+ * @param response sends the data or err
+ * @return responses with a http response
+ */
 exports.forgotpassword = (req, res) => {
     try {
         req.checkBody("Email", "Email is not valid").isEmail();
@@ -107,10 +113,12 @@ exports.forgotpassword = (req, res) => {
         console.log(e);
     }
 }
-/* @desc  filters the request data,validates error,if everthig is correct send mail
-    @param req,res  takes response and request as parameters 
-    @return response - success or failure 
-    */
+/**
+ * @desc Gets the input from front end filters and performs validation
+ * @param req request contains all the requested data
+ * @param response sends the data or err
+ * @return responses with a http response
+ */
 exports.resetpassword = (req, res) => {
     try {
         if (req.body.Password !== null && req.body.confirmPassword !== null) {
@@ -136,11 +144,39 @@ exports.resetpassword = (req, res) => {
         console.log(e);
     }
 }
-
+/**
+ * @desc Gets the input from front end filters and performs validation
+ * @param req request contains all the requested data
+ * @param callback sends the data or err
+ * @return responses with a http response
+ */
 exports.chat = (req, callback) => {
     try {
 
         userService.chat(req, (err, data) => {
+            if (err) {
+                callback(err);
+                // res.status(404).send(err);
+            } else {
+                callback(null, data);
+                // res.status(200).send(data);
+            }
+
+        })
+    } catch (e) {
+        console.log(e);
+    }
+}
+/**
+ * @desc Gets the input from front end filters and performs validation
+ * @param req request contains all the requested data
+ * @param callback sends the data or err
+ * @return responses with a http response
+ */
+exports.groupchat = (req, callback) => {
+    try {
+
+        userService.groupchat(req, (err, data) => {
             if (err) {
                 callback(err);
                 // res.status(404).send(err);
@@ -159,12 +195,12 @@ exports.chat = (req, callback) => {
 
 
 
-
-
-/* @desc  filters the request data,validates error,if everthig is correct send mail
-    @param req,res  takes response and request as parameters 
-    @return response - success or failure 
-    */
+/**
+ * @desc Gets the input from front end filters and performs validation
+ * @param req request contains all the requested data
+ * @param response sends the data or err
+ * @return responses with a http response
+ */
 exports.getUsers = (req, res) => {
     try {
 
@@ -181,7 +217,12 @@ exports.getUsers = (req, res) => {
         console.log(e);
     }
 }
-
+/**
+ * @desc Gets the input from front end filters and performs validation
+ * @param req request contains all the requested data
+ * @param response sends the data or err
+ * @return responses with a http response
+ */
 exports.getMsg = (req, res) => {
     try {
 
@@ -199,17 +240,71 @@ exports.getMsg = (req, res) => {
     }
 }
 
+/**
+ * @desc Gets the input from front end filters and performs validation
+ * @param req request contains all the requested data
+ * @param response sends the data or err
+ * @return responses with a http response
+ */
+exports.getGrpMsg = (req, res) => {
+    try {
 
+        userService.getGrpMsg(req, (err, data) => {
+            if (err) {
+                res.status(404).send(err);
+            } else {
+                res.status(200).send(data);
+            }
+
+        })
+
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+
+/**
+ * @desc Gets the input from front end filters and performs validation
+ * @param req request contains all the requested data
+ * @param response sends the data or err
+ * @return responses with a http response
+ */
 exports.createGroup = (req, res) => {
     try {
         userService.createGroup(req, (err, data) => {
             if (err) {
-                callback(err);
+                res.status(404).send(err);
             }
             else {
-                callback(null, data);
+                res.status(200).send(data);
             }
         });
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+/**
+ * @desc Gets the input from front end filters and performs validation
+ * @param req request contains all the requested data
+ * @param response sends the data or err
+ * @return responses with a http response
+ */
+exports.getGroups = (req, callback) => {
+    try {
+
+        userService.getGroups(req, (err, data) => {
+            if (err) {
+                callback(err);
+                // res.status(404).send(err);
+            } else {
+                callback(null, data);
+                // res.status(200).send(data);
+            }
+
+        })
+
     } catch (e) {
         console.log(e);
     }

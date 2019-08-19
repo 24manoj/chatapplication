@@ -23,13 +23,13 @@ let chat = new mangoose.Schema({
         timestamps: true
 
     });
+/** Schema for group database */
 let group = new mangoose.Schema({
-    "groupName": {
+    "creator": {
         type: String,
         required: true,
-        unique: true
     },
-    "senderEmail": {
+    "groupName": {
         type: String,
         required: true
     },
@@ -37,14 +37,37 @@ let group = new mangoose.Schema({
         type: String,
         required: true
     }],
-    "chatlog": {
-        type: String,
-        required: true
-    }
+
 }, {
         timestamps: true
 
     })
+
+/** creating database for groupMsg */
+let groupMsg = new mangoose.Schema({
+    "from": {
+        type: String,
+        required: true,
+    },
+    "groupName": {
+        type: String,
+        required: true,
+
+    },
+    "membersEmail": [{
+        type: String,
+        required: true
+    }],
+    "msg":
+    {
+        type: String,
+        required: true
+    },
+}, {
+        timestamps: true
+
+    });
+/** creating schema for registration */
 let registration = new mangoose.Schema({
     "firstName": {
         type: String,
@@ -69,12 +92,13 @@ let registration = new mangoose.Schema({
 var chatMsg = mangoose.model("chat", chat);
 //creating a schema model for  registration
 var userRegistration = mangoose.model("user", registration);
-var groupName = mangoose.model("gropName", group);
-
+var groupCreate = mangoose.model("groups", group);
+var getGroupMsgs = mangoose.model('groupMsgs', groupMsg);
 /**
  * @desc Gets the input from front end and stores the registerd data in deatabase
- * @param Json takes two arguments request contains all the requested data,and a callback function
- * @return bool - return a call back function err or data
+ * @param req request contains all the requested data
+ * @param callback a callback function
+ * @return return a call back function err or data
  */
 exports.chat = (req, callback) => {
     console.log(req.from);
@@ -83,6 +107,7 @@ exports.chat = (req, callback) => {
         "to": req.to,
         "msg": req.msg
     });
+    //creates a collection
     details.save((err, data) => {
         if (err) {
             console.log("msg not saved");
@@ -93,14 +118,59 @@ exports.chat = (req, callback) => {
         }
     });
 }
-
-
-
+/**
+ * @desc Gets the input from front end and stores data in deatabase
+ * @param req request contains all the requested data
+ * @param callback a callback function
+ * @return return a call back function err or data
+ */
+exports.groupchat = (req, callback) => {
+    console.log(req);
+    var grpdetails = new getGroupMsgs({
+        "from": req.from,
+        "groupName": req.groupName,
+        "membersEmail": req.membersEmail,
+        "msg": req.msg
+    });
+    grpdetails.save((err, data) => {
+        if (err) {
+            console.log("Grpmsg not saved");
+            callback(err);
+        } else {
+            console.log("Grp msg saved");
+            callback(null, data);
+        }
+    });
+}
 
 /**
- * @desc Gets the input from front end and stores the registerd data in deatabase
- * @param Json takes two arguments request contains all the requested data,and a callback function
- * @return bool - return a call back function err or data
+ * @desc Gets the input from front end and stores data in deatabase
+ * @param req request contains all the requested data
+ * @param callback a callback function
+ * @return return a call back function err or data
+ */
+exports.getGroups = (req, callback) => {
+    console.log(req);
+    groupCreate.find({
+        $or: [{ "creator": req }, {
+
+            "membersEmail": req
+        }]
+    }, (err, data) => {
+        if (err) {
+            console.log(err);
+            callback(err);
+        }
+        else {
+            callback(null, data);
+        }
+    })
+}
+/**
+ * @desc Gets the input from front end and stores data in deatabase
+ * @param req request contains all the requested data
+ * @param callback a callback function
+ * @return return a call back function err or data
  */
 exports.Register = (req, callback) => {
     //findOne is buitin method of mongodb
@@ -137,9 +207,10 @@ exports.Register = (req, callback) => {
     }
 }
 /**
- * @desc Gets the input email and password ,checkes for data avalibality in mongodb
- * @param Json Takes two parameter request and a callback
- * @return bool - return a callback function err or data
+ * @desc Gets the input from front end and stores data in deatabase
+ * @param req request contains all the requested data
+ * @param callback a callback function
+ * @return return a call back function err or data
  */
 exports.login = (req, callback) => {
     try {
@@ -169,9 +240,10 @@ exports.login = (req, callback) => {
 }
 
 /**
- * @desc Gets the input email and password ,checkes for data avalibality in mongodb
- * @param  req callback Takes two parameter request and a callback
- * @return bool - return a callback function err or data
+ * @desc Gets the input from front end and stores data in deatabase
+ * @param req request contains all the requested data
+ * @param callback a callback function
+ * @return return a call back function err or data
  */
 exports.forgotpassword = (req, callback) => {
     try {
@@ -189,10 +261,12 @@ exports.forgotpassword = (req, callback) => {
         console.log(e);
     }
 }
-/* @desc takes changed password from the user and saves to database
-    @param  takes a request data and a callback function as argumensts
-    @return bool - success or failure 
-    */
+/**
+ * @desc Gets the input from front end and stores data in deatabase
+ * @param req request contains all the requested data
+ * @param callback a callback function
+ * @return return a call back function err or data
+ */
 exports.resetpassword = (data, callback) => {
     try {
         dcrypt.hash(data.userid.userId, 10, (err, encrypted) => {
@@ -217,14 +291,19 @@ exports.resetpassword = (data, callback) => {
     }
 }
 
-
+/**
+ * @desc Gets the input from front end and stores data in deatabase
+ * @param req request contains all the requested data
+ * @param callback a callback function
+ * @return return a call back function err or data
+ */
 exports.createGroup = (req, callback) => {
     try {
-        var groupDeatils = new group({
+        var groupDeatils = new groupCreate({
+            "creator": req.body.creator,
             "groupName": req.body.groupName,
-            "senderEmail": req.body.senderEmail,
-            "membersEmail": [req.body.member1, req.body.member2, req.body.member3, req.body.member4],
-            "chatlog": req.body.msg
+            "membersEmail": req.body.members,
+
         });
         groupDeatils.save((err, data) => {
             if (err) {
@@ -240,6 +319,12 @@ exports.createGroup = (req, callback) => {
         console.log(e);
     }
 }
+/**
+ * @desc Gets the input from front end and stores data in deatabase
+ * @param req request contains all the requested data
+ * @param callback a callback function
+ * @return return a call back function err or data
+ */
 exports.getUsers = (callback) => {
 
     userRegistration.find((err, data) => {
@@ -253,6 +338,12 @@ exports.getUsers = (callback) => {
     })
 
 }
+/**
+ * @desc Gets the input from front end and stores data in deatabase
+ * @param req request contains all the requested data
+ * @param callback a callback function
+ * @return return a call back function err or data
+ */
 exports.getMsg = (req, callback) => {
 
     chatMsg.find({
@@ -263,6 +354,34 @@ exports.getMsg = (req, callback) => {
         {
             "from": req.body.to,
             "to": req.body.from
+        }]
+    }, (err, data) => {
+        if (err) {
+            callback(err);
+        }
+        else {
+            console.log(data)
+            callback(null, data);
+        }
+    })
+}
+/**
+ * @desc Gets the input from front end and stores data in deatabase
+ * @param req request contains all the requested data
+ * @param callback a callback function
+ * @return return a call back function err or data
+ */
+exports.getGrpMsg = (req, callback) => {
+
+    getGroupMsgs.find({
+        $or: [{
+            "from": req.body.from,
+            "groupName": req.body.groupName
+
+        },
+        {
+            "members": req.body.form,
+            "groupName": req.body.groupName
         }]
     }, (err, data) => {
         if (err) {

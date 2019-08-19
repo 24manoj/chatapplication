@@ -14,7 +14,8 @@ try {
     router.route('/getUsers').post(controller.getUsers);
     router.route('/storeMsg').post(controller.chat);
     router.route('/getMsg').post(controller.getMsg);
-    router.route('/createGrpdata').post(controller.createGroup);
+    router.route('/createGroup').post(controller.createGroup);
+    router.route('/getGrpMsg').post(controller.getGrpMsg)
     //making the router global
     module.exports = router;
 } catch (e) {

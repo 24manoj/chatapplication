@@ -10,6 +10,10 @@ form {
     padding: 3px;
 }
 
+#body-color {
+    background-color: aqua;
+}
+
 /* class css,specifies border */
 .border {
     border: thin black solid;
@@ -30,6 +34,16 @@ div {
     padding: 0;
 }
 
+#navi-color-body {
+    background-color: rgb(0, 183, 255);
+    display: block;
+    margin: 0;
+    padding: 0;
+    height: 300px;
+    overflow-y: scroll;
+}
+
+
 #users-color {
     background-color: cyan;
     width: 800px;
@@ -44,9 +58,13 @@ div {
 }
 
 .typemsg {
-    position: -ms-page;
+
+    position: fixed;
+    left: 450px;
+    bottom: 85px;
     margin: 0%;
-    padding: 0%
+    padding: 0%;
+    border-top: 100px;
 }
 
 .footer {

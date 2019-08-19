@@ -8,7 +8,7 @@
 </head>
 
 <body ng-controler="listUsers">
-    <div class="vw-100 vh-100">
+    <div class="vw-100 vh-100" id="body-color">
         <div class="row" id="navi-color">
             <div role="navigation">
                 <h1 class="navbar-brand"><label class="display-4">@WeChat</label></h1>
@@ -24,19 +24,26 @@
         </div>
         <div class="row">
             <div class="col-sm-4">
-                <buton class="btn btn-primary btn-block">Create group</buton>
-                <div ng-repeat="value in data">
+                <buton class="btn btn-primary btn-block" ng-click="groupcreate()">Create group</buton>
+                <div ng-repeat="value in data ">
                     <button class="btn btn-primary btn-block" ng-model=value ng-click="person(value)"
-                        ng-if="value.Email!=userEmail ">
-                        {{value.firstName }}</button> </div>
+                        ng-if="value.Email!=userEmail">
+                        {{value.firstName }}</button>
+                    </button>
+                </div>
+
+                <div ng-repeat="grps in groups">
+                    <button class="btn btn-primary btn-block" ng-model=group ng-click="GrpPerson(grps)">
+                        {{grps.groupName}}
+                </div>
             </div>
-            <div class="col-sm-4" id="navi-color">
+            <div class="col-sm-4" id="navi-color-body">
 
                 <div ng-repeat="chat in msgs" class="chat">
                     <p class="chatMsg" ng-show="chat.from != userEmail" style="text-align:left;color:black">
-                        <strong> {{chat.from}}:::{{chat.msg}}</strong></p>
+                        {{chat.from}}:::<strong>{{chat.msg}}</strong></p>
                     <p class="chatMsg" ng-show="chat.from == userEmail" style="text-align:right;color:black">
-                        <strong>{{chat.from}}::{{chat.msg}}</strong></p>
+                        <strong>{{chat.msg}}</strong></p>
                 </div>
                 <div class="typemsg">
                     <input type="text" name="msg" ng-model="msg" placeholder="Type a message...."

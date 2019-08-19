@@ -63,6 +63,38 @@ try {
     var io = require('socket.io').listen(server);
     io.on('connection', (socket) => {
         console.log("socket Connected");
+        /**
+         catches the emited event from client side
+         */
+        socket.on("getGrops", (data) => {
+            console.log("Emit catched in getGroups");
+            controller.getGroups(data, (err, res) => {
+                if (err) {
+                    console.log("Empty Groups");
+                }
+                else {
+                    //creating event
+                    io.sockets.emit("updateGrops", res);
+                }
+            })
+        });
+        /**
+          catches the emited event from client side
+          */
+        socket.on("storeGrpMsg", (data) => {
+            console.log("Emit catched in getGroupsmsgs", data);
+            controller.groupchat(data, (err, res) => {
+                if (err) {
+                    console.log("not inserted Groups");
+                }
+                else {
+                    io.sockets.emit("updateGropsMsgs", res);
+                }
+            })
+        });
+        /**
+        catches the emited event from client side
+        */
         socket.on('message', (data) => {
             console.log("Emit catched")
             controller.chat(data, (err, res) => {
