@@ -4,14 +4,10 @@ h1 {
 }
 
 /* specifies the max width for form,margin,padding */
-form {
-    max-width: 360px;
-    margin: 10px;
-    padding: 3px;
-}
 
 #body-color {
     background-color: aqua;
+    height: 90%;
 }
 
 /* class css,specifies border */
@@ -23,6 +19,7 @@ form {
 
 /* specifies margin and padding*/
 div {
+
     margin: 5pt;
     padding: 1pt;
 }
@@ -32,6 +29,7 @@ div {
     display: block;
     margin: 0;
     padding: 0;
+
 }
 
 #navi-color-body {
@@ -41,21 +39,22 @@ div {
     padding: 0;
     height: 300px;
     overflow-y: scroll;
+
+
+
 }
 
 
 #users-color {
-    background-color: cyan;
+    background-color: cornsilk;
     width: 800px;
     height: 500px;
     margin: 2px;
     padding: 2px;
+
 }
 
 
-#display-flx {
-    display: flex;
-}
 
 .typemsg {
 
@@ -64,20 +63,14 @@ div {
     bottom: 85px;
     margin: 0%;
     padding: 0%;
-    border-top: 100px;
 }
 
 .footer {
     position: fixed;
-    left: 0;
+    left: 8;
     bottom: 0;
-    width: 100%;
+    width: 97.7%;
     background-color: rgb(0, 183, 255);
-    color: white;
+    color: solid black;
     text-align: left;
-}
-
-p {
-
-    margin: 0 !important;
 }

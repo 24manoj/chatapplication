@@ -9,7 +9,7 @@ exports.sendMail = (reciver, data, callback) => {
                 pass: '123manoj24$'
             }
         });
-        console.log(data);
+        console.log("in mailgenerate", data);
         var mailOptions = {
             from: 'manoj.mk.24.mk@gmail.com',
             to: reciver,

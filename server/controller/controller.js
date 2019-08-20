@@ -2,6 +2,7 @@
 const userService = require('../services/service');
 const mail = require('../utility/mailer');
 const jwt = require('../utility/generateToken');
+require('dotenv').config()
 /**
  * @desc Gets the input from front end filters and performs validation  
  * @param req request contains all the requested data
@@ -96,7 +97,9 @@ exports.forgotpassword = (req, res) => {
                     //generates token
                     jwt.generate(data[0].id, (err, token) => {
                         // mail.sendMail(data[0].Email, process.env.url + "?token=" + token, (err, mail) => {
-                        mail.sendMail(data[0].Email, process.env.url + "?token=" + token, (err, mail) => {
+                        //console.log('from controller', process.env.url);
+                        var url = process.env.url + "#!/resetpassword" + "?token=" + token;
+                        mail.sendMail(data[0].Email, url, (err, mail) => {
                             if (mail) {
                                 console.log("mail sent");
                                 res.status(200).send(mail);

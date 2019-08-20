@@ -1,0 +1,36 @@
+{
+    "data": {
+        "firstName": "deff",
+        "LastName": "kc",
+        "Email": "gggdd@gmail.com",
+        "Password": "123456789"
+    },
+    "errdata": {
+        "firstName": "deff",
+        "LastName": "kc",
+        "Email": "gggdd@gmail",
+        "Password": "1234"
+    },
+    "login": {
+        "Email": "akshay@gmail.com",
+        "Password": "password"
+    },
+    "wronglogin": {
+        "Email": "a@gmail.com",
+        "Password": "password"
+    },
+    "wrongEmail": {
+        "Email": "a@",
+        "Password": "password"
+    },
+    "Email": {
+        "Email": "manoj.ks.24.mk@gmail.com",
+        "Password": "password"
+    },
+    "passwords": {
+        "Password": "Password",
+        "confirmPassword": "Password"
+
+    }
+
+}

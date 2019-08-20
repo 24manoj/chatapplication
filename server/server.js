@@ -21,7 +21,9 @@ try {
     var bodyParser = require("body-parser");
     //importing routes function 
     const routes = require('./routes/routes');
-    require('dotenv').config();
+    require('dotenv').config()
+    // console.log("In server process dtnv", res)
+    //console.log("in server.js", process.env.url);
     //careating an instance of the framework
     const app = express();
     /*for every middleware layer that you want to add (it can be generic to all paths or 
@@ -111,6 +113,7 @@ try {
     io.on('disconnect', function () {
         console.log("socket disconnected!! ");
     });
+    module.exports = app;
 } catch (e) {
     console.log(e);
 }

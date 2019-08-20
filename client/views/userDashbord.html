@@ -8,7 +8,7 @@
 </head>
 
 <body ng-controler="listUsers">
-    <div class="vw-100 vh-100" id="body-color">
+    <div class="vw-60 vh-90" id="body-color">
         <div class="row" id="navi-color">
             <div role="navigation">
                 <h1 class="navbar-brand"><label class="display-4">@WeChat</label></h1>
@@ -37,9 +37,12 @@
                         {{grps.groupName}}
                 </div>
             </div>
-            <div class="col-sm-4" id="navi-color-body">
-
+            <div class="col-sm-4" id="navi-color-body" ng-show=value>
+                <button class="btn btn-primary"> <strong ng-show=value
+                        ng-hide=grpPerson>{{value.firstName }}</strong><strong ng-show=grpPerson
+                        ng-hide=value>{{grpPerson.groupName}}</strong></button>
                 <div ng-repeat="chat in msgs" class="chat">
+
                     <p class="chatMsg" ng-show="chat.from != userEmail" style="text-align:left;color:black">
                         {{chat.from}}:::<strong>{{chat.msg}}</strong></p>
                     <p class="chatMsg" ng-show="chat.from == userEmail" style="text-align:right;color:black">
@@ -49,8 +52,15 @@
                     <input type="text" name="msg" ng-model="msg" placeholder="Type a message...."
                         style="width:360px;height:45px; " ng-keyup="$event.keyCode == 13 && storeMsg()">
                     <button class=" btn btn-primary" ng-click="storeMsg();"> send</button>
+
                 </div>
             </div>
 
         </div>
     </div>
+    <div class="footer">
+        <p>@ BridgeLabz</p>
+    </div>
+</body>
+
+</html>

@@ -253,7 +253,7 @@ exports.forgotpassword = (req, callback) => {
             if (data.length > 0) {
                 callback(null, data);
             } else {
-                callback("Email Not found  " + err);
+                callback("Email Not found  ", err);
             }
 
         })
