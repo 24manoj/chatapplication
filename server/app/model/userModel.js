@@ -357,11 +357,14 @@ exports.getMsg = (req, callback) => {
         }]
     }, (err, data) => {
         if (err) {
-            callback(err);
+            callback("NO data found", err);
         }
-        else {
-            console.log(data)
+        if (data.length > 0) {
+            console.log(data);
+
             callback(null, data);
+        } else {
+            callback("No record found");
         }
     })
 }
@@ -387,9 +390,11 @@ exports.getGrpMsg = (req, callback) => {
         if (err) {
             callback(err);
         }
-        else {
+        if (data.length > 0) {
             console.log(data)
             callback(null, data);
+        } else {
+            callback("NO data found");
         }
     })
 

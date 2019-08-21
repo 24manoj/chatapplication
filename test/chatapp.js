@@ -103,7 +103,7 @@ describe("Testing  ForgotPassword api", () => {
     it("Testing with wrong  details", (done) => {
         chai.request(server)
             .post('/forgotPassword')
-            .send(data.wrongEmail.Email)
+            .send(data.Emailwrong)
             .end((err, res) => {
                 res.should.have.status(422);
                 console.log("data validation sucess");
@@ -122,31 +122,116 @@ describe("Testing  ForgotPassword api", () => {
 
 describe("Testing  ResetPassword api", () => {
     it("Testing with right details", (done) => {
-
+        console.log(data.passwords)
         chai.request(server)
-            .post('/resetpassword/' + token)
+            .post(`/resetpassword`)
+            .query({ "token": token })
             .send(data.passwords)
             .end((err, res) => {
                 res.should.have.status(200);
-                console.log("data validation sucess", res);
+                console.log("data validation sucess", res.body);
                 done();
             });
     })
-    // it("Testing with wrong  details", (done) => {
-    //     chai.request(server)
-    //         .post('/forgotPassword')
-    //         .send(data.wrongEmail.Email)
-    //         .end((err, res) => {
-    //             res.should.have.status(422);
-    //             console.log("data validation sucess");
-    //             res.body.error.forEach(element => {
-    //                 console.log("data validation", element.msg);
-    //                 console.log("data validated Data", element.value);
-    //             });
-    //             console.log("Mail sending ", res.body.sucess)
-    //             done()
+    it("Testing with wrong  details", (done) => {
+        chai.request(server)
+            .post('/forgotPassword')
+            .send(data.wrongEmail.Email)
+            .end((err, res) => {
+                res.should.have.status(422);
+                console.log("data validation sucess");
+                res.body.error.forEach(element => {
+                    console.log("data validation", element.msg);
+                    console.log("data validated Data", element.value);
+                });
+                console.log("Mail sending ", res.body.sucess)
+                done()
 
-    //         });
-    // })
+            });
+    })
 
 })
+describe("Testing  getusers api", () => {
+    it("Testing with right details", (done) => {
+        chai.request(server)
+            .post('/getUsers')
+            .end((err, res) => {
+                res.should.have.status(200);
+                console.log("data validation sucess", res.body);
+                done();
+            });
+    })
+})
+describe("Testing  getMsg api", () => {
+    it("Testing with right details", (done) => {
+        chai.request(server)
+            .post('/getMsg')
+            .send(data.getMsg)
+            .end((err, res) => {
+                res.should.have.status(200);
+                console.log("data validation sucess");
+                done();
+            });
+    })
+    it("Testing with wrong Email details", (done) => {
+
+        chai.request(server)
+            .post('/getMsg')
+            .send(data.getMsgerror)
+            .end((err, res) => {
+                res.should.have.status(404);
+                console.log("data validation sucess", res.text);
+                done();
+            });
+    })
+    it("Testing with empty details", (done) => {
+
+        chai.request(server)
+            .post('/getMsg')
+            .send({})
+            .end((err, res) => {
+                res.should.have.status(422);
+                console.log("data validation sucess", res.text);
+                done();
+            });
+    })
+})
+
+describe("Testing  grpMsgs api", () => {
+    it("Testing with wrong  details", (done) => {
+
+        chai.request(server)
+            .post('/getGrpMsg')
+            .send(data.getGrpMsgerror)
+            .end((err, res) => {
+                res.should.have.status(404);
+                console.log("data validation sucess", res.text);
+                done();
+            });
+    })
+    it("Testing with right details", (done) => {
+
+        chai.request(server)
+            .post('/getGrpMsg')
+            .send(data.getGrpMsg)
+            .end((err, res) => {
+                res.should.have.status(200);
+                console.log("data validation sucess");
+                done();
+            });
+    })
+    it("Testing with empty details", (done) => {
+
+        chai.request(server)
+            .post('/getGrpMsg')
+            .send({})
+            .end((err, res) => {
+                res.should.have.status(422);
+                console.log("data validation sucess", res.text);
+                done();
+            });
+    })
+})
+
+
+

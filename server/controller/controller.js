@@ -124,23 +124,33 @@ exports.forgotpassword = (req, res) => {
  */
 exports.resetpassword = (req, res) => {
     try {
-        if (req.body.Password !== null && req.body.confirmPassword !== null) {
-            if (req.body.Password == req.body.confirmPassword) {
-                let resetData = {
-                    userid: req.decoded,
-                    Password: req.body.Password,
-                    confirmPassword: req.body.confirmPassword
-                }
-                userService.resetpassword(resetData, (err, data) => {
-                    if (err) {
-                        res.status(404).send(err);
-                    } else {
-                        res.status(200).send(data);
+        req.checkBody("Password", "password is not valid").isLength({ min: 8 });
+        req.checkBody("confirmPassword", "confirmPassword is not valid").isLength({ min: 8 });
+        var errors = req.validationErrors();
+        var response = {};
+        if (errors) {
+            response.error = errors;
+            response.sucess = false;
+            res.status(422).send(response);
+        } else {
+            if (req.body.Password !== null && req.body.confirmPassword !== null) {
+                if (req.body.Password == req.body.confirmPassword) {
+                    let resetData = {
+                        userid: req.decoded,
+                        Password: req.body.Password,
+                        confirmPassword: req.body.confirmPassword
                     }
+                    userService.resetpassword(resetData, (err, data) => {
+                        if (err) {
+                            res.status(404).send(err);
+                        } else {
+                            res.status(200).send(data);
+                        }
 
-                })
-            } else {
-                res.status(422).send("Passwords mimatch" + err);
+                    })
+                } else {
+                    res.status(422).send("Passwords mismatch", err);
+                }
             }
         }
     } catch (e) {
@@ -155,17 +165,27 @@ exports.resetpassword = (req, res) => {
  */
 exports.chat = (req, callback) => {
     try {
+        req.checkBody("from", "sender Email is not valid").isEmail()
+        req.checkBody("msg", "msg  not valid").not.isEmpty()
+        req.checkBody("to", " reciver Email not valid").isEmail()
+        var errors = req.validationErrors();
+        var response = {};
+        if (errors) {
+            response.error = errors;
+            response.sucess = false;
+            res.status(422).send(response);
+        } else {
+            userService.chat(req, (err, data) => {
+                if (err) {
+                    callback(err);
+                    //res.status(404).send(err);
+                } else {
+                    callback(null, data);
+                    //res.status(200).send(data);
+                }
 
-        userService.chat(req, (err, data) => {
-            if (err) {
-                callback(err);
-                // res.status(404).send(err);
-            } else {
-                callback(null, data);
-                // res.status(200).send(data);
-            }
-
-        })
+            })
+        }
     } catch (e) {
         console.log(e);
     }
@@ -206,7 +226,6 @@ exports.groupchat = (req, callback) => {
  */
 exports.getUsers = (req, res) => {
     try {
-
         userService.getUsers((err, data) => {
             if (err) {
                 res.status(404).send(err);
@@ -228,16 +247,24 @@ exports.getUsers = (req, res) => {
  */
 exports.getMsg = (req, res) => {
     try {
+        req.checkBody("from", "sender Email is not valid").isEmail()
+        req.checkBody("to", " reciver Email not valid").isEmail()
+        var errors = req.validationErrors();
+        var response = {};
+        if (errors) {
+            response.error = errors;
+            response.sucess = false;
+            res.status(422).send(response);
+        } else {
+            userService.getMsg(req, (err, data) => {
+                if (err) {
+                    res.status(404).send(err);
+                } else {
+                    res.status(200).send(data);
+                }
 
-        userService.getMsg(req, (err, data) => {
-            if (err) {
-                res.status(404).send(err);
-            } else {
-                res.status(200).send(data);
-            }
-
-        })
-
+            })
+        }
     } catch (e) {
         console.log(e);
     }
@@ -251,16 +278,24 @@ exports.getMsg = (req, res) => {
  */
 exports.getGrpMsg = (req, res) => {
     try {
+        req.checkBody("from", "sender Email is not valid").isEmail()
+        req.checkBody("groupName", " GroupName   not valid").isAlpha()
+        var errors = req.validationErrors();
+        var response = {};
+        if (errors) {
+            response.error = errors;
+            response.sucess = false;
+            res.status(422).send(response);
+        } else {
+            userService.getGrpMsg(req, (err, data) => {
+                if (err) {
+                    res.status(404).send(err);
+                } else {
+                    res.status(200).send(data);
+                }
 
-        userService.getGrpMsg(req, (err, data) => {
-            if (err) {
-                res.status(404).send(err);
-            } else {
-                res.status(200).send(data);
-            }
-
-        })
-
+            })
+        }
     } catch (e) {
         console.log(e);
     }
