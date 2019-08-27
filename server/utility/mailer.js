@@ -2,11 +2,12 @@ var mailer = require('nodemailer');
 
 exports.sendMail = (reciver, data, callback) => {
     try {
+        console.log(process.env.email)
         var transporter = mailer.createTransport({
             service: 'gmail',
             auth: {
-                user: 'manoj.mk.24.mk@gmail.com',
-                pass: '123manoj24$'
+                user: process.env.email,
+                pass: process.env.pass
             }
         });
         console.log("in mailgenerate", data);

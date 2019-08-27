@@ -16,6 +16,7 @@ exports.generate = (id, callback) => {
         var payload = { userId: id };
 
         jwt.sign(payload, process.env.secretKey, (err, token) => {
+
             if (err)
                 callback(err);
             else

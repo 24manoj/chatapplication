@@ -11,7 +11,7 @@ chai.use(chaiHttp);
 describe("Testing  Registration api", () => {
     it("Testing for duplicate registration ", (done) => {
         chai.request(server)
-            .post("/register", data)
+            .post("/register")
             .send(data.data)
             .end((err, res) => {
                 res.should.not.have.status(200);

@@ -90,6 +90,7 @@ app.controller("listUsers", function ($scope, $location, servicesLogin, SocketSe
     $scope.GrpPerson = (value) => {
         try {
             $scope.grpPerson = value;
+
             servicesLogin.getGrpMsg($scope, value);
         } catch (e) {
             console.log(e);

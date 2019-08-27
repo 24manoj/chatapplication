@@ -359,12 +359,10 @@ exports.getMsg = (req, callback) => {
         if (err) {
             callback("NO data found", err);
         }
-        if (data.length > 0) {
+        if (data) {
             console.log(data);
 
             callback(null, data);
-        } else {
-            callback("No record found");
         }
     })
 }
@@ -387,14 +385,13 @@ exports.getGrpMsg = (req, callback) => {
             "groupName": req.body.groupName
         }]
     }, (err, data) => {
+
         if (err) {
             callback(err);
         }
-        if (data.length > 0) {
+        if (data) {
             console.log(data)
             callback(null, data);
-        } else {
-            callback("NO data found");
         }
     })
 

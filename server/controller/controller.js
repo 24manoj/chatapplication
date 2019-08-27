@@ -96,6 +96,7 @@ exports.forgotpassword = (req, res) => {
                 } else {
                     //generates token
                     jwt.generate(data[0].id, (err, token) => {
+                    
                         // mail.sendMail(data[0].Email, process.env.url + "?token=" + token, (err, mail) => {
                         //console.log('from controller', process.env.url);
                         var url = process.env.url + "#!/resetpassword" + "?token=" + token;
@@ -165,27 +166,19 @@ exports.resetpassword = (req, res) => {
  */
 exports.chat = (req, callback) => {
     try {
-        req.checkBody("from", "sender Email is not valid").isEmail()
-        req.checkBody("msg", "msg  not valid").not.isEmpty()
-        req.checkBody("to", " reciver Email not valid").isEmail()
-        var errors = req.validationErrors();
-        var response = {};
-        if (errors) {
-            response.error = errors;
-            response.sucess = false;
-            res.status(422).send(response);
-        } else {
-            userService.chat(req, (err, data) => {
-                if (err) {
-                    callback(err);
-                    //res.status(404).send(err);
-                } else {
-                    callback(null, data);
-                    //res.status(200).send(data);
-                }
 
-            })
-        }
+        userService.chat(req, (err, data) => {
+            if (err) {
+                callback(err);
+                //res.status(404).send(err);
+            } else {
+
+                callback(null, data);
+                //res.status(200).send(data);
+            }
+
+        })
+
     } catch (e) {
         console.log(e);
     }

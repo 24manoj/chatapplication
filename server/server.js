@@ -34,8 +34,9 @@ try {
     app.use(bodyParser.urlencoded({
         extended: true
     }));
+
     app.use(cors());
-    app.options('*', cors());
+
 
     app.use(express.static('../client'))
     app.use(expressValidator());
@@ -98,7 +99,7 @@ try {
         catches the emited event from client side
         */
         socket.on('message', (data) => {
-            console.log("Emit catched")
+            console.log("Emit catched", data)
             controller.chat(data, (err, res) => {
                 if (err) {
                     console.log("un sucessfull insertion");
