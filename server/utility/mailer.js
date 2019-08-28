@@ -12,7 +12,7 @@ exports.sendMail = (reciver, data, callback) => {
         });
         console.log("in mailgenerate", data);
         var mailOptions = {
-            from: 'manoj.mk.24.mk@gmail.com',
+            from: process.env.email,
             to: reciver,
             subject: 'Password Reset',
             text: data
